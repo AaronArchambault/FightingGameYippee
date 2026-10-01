@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using FightCore;
+//unity has its own Motion class for animation so this says we mean the fight one with the special move inputs
+using Motion = FightCore.Motion;
 
 namespace FightGame
 {
