@@ -3,7 +3,9 @@
     "rootNamespace": "FightGame.EditorTools",
     "references": [
         "FightCore",
-        "FightGame.Runtime"
+        "FightGame.Runtime",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [
         "Editor"

@@ -116,7 +116,7 @@ namespace FightCore
                     case FState.Win:
                         return true;
                     case FState.AirHitStun:
-                        return juggle >= MatchSim.JuggleLimit || dead;
+                        return juggle >= match.rules.juggleLimit || dead;
                     case FState.DashB:
                         return stateFrame <= 8;
                     case FState.Attack:
@@ -556,7 +556,7 @@ namespace FightCore
             meter = Math.Min(MaxMeter, Math.Max(0, meter - m.meterCost + m.meterOnUse));
             if (!airborne) { vx = 0; if (fromNeutral) FaceOpponent(); }
             else airAttackUsed = true;
-            match.Emit(SimEventType.AttackStart, index, x, y, m.hit.level, m.index);
+            match.Emit(SimEventType.AttackStart, index, x, y, m.hit.level, m.index, 0, m.index);
             if (m.isSuper && m.superFreeze > 0) match.StartSuperFreeze(index, m.superFreeze);
             AdvanceMove();
         }

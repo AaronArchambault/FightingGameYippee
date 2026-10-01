@@ -9,10 +9,15 @@ namespace FightGame.EditorTools
     //if they do not match then something in the sim is using randomness or floats or unity time and that would break replays and online
     public static class SimSelfTest
     {
+        static MatchRules rules;
+
         [MenuItem("Tools/Fighting Game/Run Determinism Self Test")]
         public static void Run()
         {
-            var roster = RosterLoader.Load();
+            //it uses the roster and rules from the FightGameManager in the open scene if there is one
+            var mgr = FightingGameMenu.FindOne<FightGameManager>();
+            var roster = RosterLoader.Load(mgr != null ? mgr.roster : null);
+            rules = mgr != null ? mgr.rules : null;
             int checkedCount = 0, fails = 0;
             long frames = 0;
             var sw = Stopwatch.StartNew();
@@ -44,7 +49,7 @@ namespace FightGame.EditorTools
 
         static uint Play(RosterEntry a, RosterEntry b, uint seed, ReplayData rec, out int length)
         {
-            var sim = new MatchSim(a.MakeDef(), b.MakeDef(), false);
+            var sim = new MatchSim(a.MakeDef(), b.MakeDef(), false, rules);
             var ai1 = new AIBrain(0, AIDifficulty.Hard, seed);
             var ai2 = new AIBrain(1, AIDifficulty.Hard, seed + 100);
             length = 0;
@@ -61,7 +66,7 @@ namespace FightGame.EditorTools
 
         static uint Replay(RosterEntry a, RosterEntry b, ReplayData r)
         {
-            var sim = new MatchSim(a.MakeDef(), b.MakeDef(), false);
+            var sim = new MatchSim(a.MakeDef(), b.MakeDef(), false, rules);
             for (int i = 0; i < r.Length; i++)
                 sim.Tick(new FrameInput { bits = (ushort)r.p1Inputs[i] }, new FrameInput { bits = (ushort)r.p2Inputs[i] });
             return sim.Checksum();

@@ -54,8 +54,11 @@ namespace FightGame
         readonly WorldBox[] hurt = new WorldBox[6];
         public bool visible;
 
+        void Awake() { Init(); }
+
         public void Init()
         {
+            if (pool != null) return;
             pool = new ObjectPool<DebugBox>(() =>
             {
                 var go = new GameObject("DebugBox");

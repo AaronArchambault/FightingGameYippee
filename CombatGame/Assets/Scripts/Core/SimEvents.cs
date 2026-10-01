@@ -37,5 +37,7 @@ namespace FightCore
         public HitLevel level;
         public int value;
         public int value2;
+        //this is which move in that fighter move list caused it and it is below zero when no move did
+        public int move;
     }
 }

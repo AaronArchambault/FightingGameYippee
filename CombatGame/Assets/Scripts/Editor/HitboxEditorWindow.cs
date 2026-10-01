@@ -19,6 +19,8 @@ namespace FightGame.EditorTools
         Vector2 pan = new Vector2(0f, 0f);
         Vector2 moveScroll, sideScroll;
         bool snap = true;
+        bool showSprite = true;
+        float spriteAlpha = 0.8f;
 
         //this is which box is selected where isHit means it is in the hitbox list and not the hurtbox list
         bool selIsHit = true;
@@ -79,6 +81,7 @@ namespace FightGame.EditorTools
             var newAsset = (FighterAsset)EditorGUILayout.ObjectField(asset, typeof(FighterAsset), false, GUILayout.Width(260));
             if (newAsset != asset) { asset = newAsset; moveIndex = 0; frame = 1; selIndex = -1; }
             GUILayout.FlexibleSpace();
+            showSprite = GUILayout.Toggle(showSprite, "Show Sprite", EditorStyles.toolbarButton, GUILayout.Width(85));
             snap = GUILayout.Toggle(snap, "Snap 25", EditorStyles.toolbarButton, GUILayout.Width(70));
             if (GUILayout.Button("Reset View", EditorStyles.toolbarButton, GUILayout.Width(80))) { zoom = 110f; pan = Vector2.zero; }
             EditorGUILayout.EndHorizontal();
@@ -186,6 +189,8 @@ namespace FightGame.EditorTools
             Handles.DrawLine(new Vector3(0, o.y), new Vector3(local.width, o.y));
             Handles.DrawLine(new Vector3(o.x, o.y), new Vector3(o.x, o.y - 2200 * s));
 
+            if (showSprite) DrawFighterSprite(local, m);
+
             var def = asset.def;
             BoxRect baseHurt = (m.dir == DirReq.Air || m.dir == DirReq.AirDown || m.useAirHurtbox) ? def.airHurt : (m.crouching ? def.crouchHurt : def.standHurt);
             bool inv = m.InvulnOn(frame);
@@ -222,6 +227,47 @@ namespace FightGame.EditorTools
 
             HandleMouse(local, m);
             GUI.EndClip();
+        }
+
+        //this draws your sprite for this exact frame behind the boxes so you can line hitboxes up with the art
+        //it uses the same code the game uses to pick sprites so what you see here is what you get in game
+        void DrawFighterSprite(Rect local, MoveDef m)
+        {
+            var set = asset.animations;
+            if (set == null) return;
+            SpriteFrame fr = null;
+            var clip = set.Find(m.id);
+            if (clip != null) fr = SpriteAnimationSet.SampleMove(clip, m, frame);
+            else
+            {
+                clip = set.Find("attack") ?? set.Find("idle");
+                if (clip != null) fr = SpriteAnimationSet.SampleLoop(clip, frame);
+            }
+            if (fr == null || fr.sprite == null) return;
+            var sp = fr.sprite;
+            var tex = sp.texture;
+            if (tex == null) return;
+
+            //it works out the sprite size and pivot in sim units where 1000 is one unity unit
+            float unit = 1000f * set.scale / sp.pixelsPerUnit;
+            var tr = sp.textureRect;
+            float w = tr.width * unit, h = tr.height * unit;
+            float left = fr.offset.x * 1000f - sp.pivot.x * unit;
+            float bottom = fr.offset.y * 1000f - sp.pivot.y * unit;
+            var uv = new Rect(tr.x / tex.width, tr.y / tex.height, tr.width / tex.width, tr.height / tex.height);
+            if (set.artFacesLeft)
+            {
+                //art that faces left gets mirrored so it faces right like the boxes
+                left = -(left + w);
+                uv = new Rect(uv.x + uv.width, uv.y, -uv.width, uv.height);
+            }
+            var o = Origin(local);
+            float s = zoom / 1000f;
+            var screen = new Rect(o.x + left * s, o.y - (bottom + h) * s, w * s, h * s);
+            var old = GUI.color;
+            GUI.color = new Color(1f, 1f, 1f, spriteAlpha);
+            GUI.DrawTextureWithTexCoords(screen, tex, uv);
+            GUI.color = old;
         }
 
         void DrawBox(Rect local, BoxRect b, Color c, bool selected)
@@ -421,7 +467,15 @@ namespace FightGame.EditorTools
             EditorGUILayout.LabelField("Total Frames", m.TotalFrames.ToString());
             EditorGUILayout.LabelField("About On Hit", (onHit > 0 ? "+" : "") + onHit);
             EditorGUILayout.LabelField("About On Block", (onBlock > 0 ? "+" : "") + onBlock);
-            EditorGUILayout.LabelField("Notation", GameRunner.Notation(m));
+            EditorGUILayout.LabelField("Notation", FightUtil.Notation(m));
+            if (asset.animations != null)
+            {
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("Sprite", EditorStyles.boldLabel);
+                spriteAlpha = EditorGUILayout.Slider("Sprite Opacity", spriteAlpha, 0.1f, 1f);
+                var clip = asset.animations.Find(m.id);
+                EditorGUILayout.LabelField("Clip", clip != null ? clip.key + "  (" + clip.frames.Count + " sprites  " + clip.timing + ")" : "none yet so it shows the attack or idle clip");
+            }
 
             EditorGUILayout.EndScrollView();
             EditorGUILayout.EndVertical();

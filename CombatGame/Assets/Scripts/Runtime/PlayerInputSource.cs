@@ -7,7 +7,8 @@ using FightCore;
 namespace FightGame
 {
     //this reads one player's controls with the new input system and turns them into a FrameInput for the sim
-    //it builds all the actions in code so you do not need to set up an input actions asset to get going
+    //if you give the manager an Input Actions asset with maps called Player1 and Player2 it uses your bindings
+    //if not it builds the default bindings in code so it always works out of the box
     public class PlayerInputSource : IDisposable
     {
         public readonly int player;
@@ -17,7 +18,9 @@ namespace FightGame
         {
             Btn.Up, Btn.Down, Btn.Left, Btn.Right, Btn.LP, Btn.MP, Btn.HP, Btn.LK, Btn.MK, Btn.HK, Btn.Start
         };
-        static readonly string[] names = { "Up", "Down", "Left", "Right", "LP", "MP", "HP", "LK", "MK", "HK", "Start" };
+
+        //these are the action names your asset needs in each map
+        public static readonly string[] ActionNames = { "Up", "Down", "Left", "Right", "LP", "MP", "HP", "LK", "MK", "HK", "Start" };
 
         //this remembers presses that happened between sim frames
         //it is so a super quick tap that goes down and up inside one render frame still counts
@@ -25,42 +28,70 @@ namespace FightGame
 
         public Gamepad AssignedPad { get; private set; }
 
-        public PlayerInputSource(int player)
+        public static string MapName(int player) { return "Player" + (player + 1); }
+
+        public PlayerInputSource(int player, InputActionAsset asset = null)
         {
             this.player = player;
-            map = new InputActionMap("Player" + (player + 1));
-            for (int i = 0; i < names.Length; i++) actions[i] = map.AddAction(names[i], InputActionType.Button);
-
-            if (player == 0)
+            InputActionMap source = asset != null ? asset.FindActionMap(MapName(player)) : null;
+            if (source != null)
             {
-                //player one keyboard is WASD to move with U I O for punches and J K L for kicks
-                Bind("Up", "<Keyboard>/w"); Bind("Down", "<Keyboard>/s"); Bind("Left", "<Keyboard>/a"); Bind("Right", "<Keyboard>/d");
-                Bind("LP", "<Keyboard>/u"); Bind("MP", "<Keyboard>/i"); Bind("HP", "<Keyboard>/o");
-                Bind("LK", "<Keyboard>/j"); Bind("MK", "<Keyboard>/k"); Bind("HK", "<Keyboard>/l");
-                Bind("Start", "<Keyboard>/escape");
+                //it copies your map so each player gets their own and changing devices does not touch the asset
+                map = source.Clone();
             }
             else
             {
-                //player two keyboard is the arrow keys with numpad 4 5 6 for punches and numpad 1 2 3 for kicks
-                Bind("Up", "<Keyboard>/upArrow"); Bind("Down", "<Keyboard>/downArrow"); Bind("Left", "<Keyboard>/leftArrow"); Bind("Right", "<Keyboard>/rightArrow");
-                Bind("LP", "<Keyboard>/numpad4"); Bind("MP", "<Keyboard>/numpad5"); Bind("HP", "<Keyboard>/numpad6");
-                Bind("LK", "<Keyboard>/numpad1"); Bind("MK", "<Keyboard>/numpad2"); Bind("HK", "<Keyboard>/numpad3");
-                Bind("Start", "<Keyboard>/backspace");
+                if (asset != null) Debug.LogWarning("Fighting Game: the input asset has no map called " + MapName(player) + " so default controls are used");
+                map = new InputActionMap(MapName(player));
+                AddDefaultBindings(map, player);
             }
-
-            //this is the gamepad layout and it is kind of like the classic six button street fighter layout
-            //the face buttons are light and medium and the right bumper and trigger are the heavies
-            Bind("Up", "<Gamepad>/dpad/up"); Bind("Down", "<Gamepad>/dpad/down"); Bind("Left", "<Gamepad>/dpad/left"); Bind("Right", "<Gamepad>/dpad/right");
-            Bind("Up", "<Gamepad>/leftStick/up"); Bind("Down", "<Gamepad>/leftStick/down"); Bind("Left", "<Gamepad>/leftStick/left"); Bind("Right", "<Gamepad>/leftStick/right");
-            Bind("LP", "<Gamepad>/buttonWest"); Bind("MP", "<Gamepad>/buttonNorth"); Bind("HP", "<Gamepad>/rightShoulder");
-            Bind("LK", "<Gamepad>/buttonSouth"); Bind("MK", "<Gamepad>/buttonEast"); Bind("HK", "<Gamepad>/rightTrigger");
-            Bind("Start", "<Gamepad>/start");
-
+            for (int i = 0; i < ActionNames.Length; i++)
+            {
+                actions[i] = map.FindAction(ActionNames[i]);
+                if (actions[i] == null)
+                {
+                    Debug.LogWarning("Fighting Game: input map " + MapName(player) + " is missing the action " + ActionNames[i]);
+                    actions[i] = map.AddAction(ActionNames[i], InputActionType.Button);
+                }
+            }
             AssignDevices();
             map.Enable();
         }
 
-        void Bind(string action, string path)
+        //this adds the default actions and bindings to a map
+        //the editor also uses it to make an Input Actions asset you can edit
+        public static void AddDefaultBindings(InputActionMap map, int player)
+        {
+            for (int i = 0; i < ActionNames.Length; i++)
+                if (map.FindAction(ActionNames[i]) == null) map.AddAction(ActionNames[i], InputActionType.Button);
+
+            if (player == 0)
+            {
+                //player one keyboard is WASD to move with U I O for punches and J K L for kicks
+                Bind(map, "Up", "<Keyboard>/w"); Bind(map, "Down", "<Keyboard>/s"); Bind(map, "Left", "<Keyboard>/a"); Bind(map, "Right", "<Keyboard>/d");
+                Bind(map, "LP", "<Keyboard>/u"); Bind(map, "MP", "<Keyboard>/i"); Bind(map, "HP", "<Keyboard>/o");
+                Bind(map, "LK", "<Keyboard>/j"); Bind(map, "MK", "<Keyboard>/k"); Bind(map, "HK", "<Keyboard>/l");
+                Bind(map, "Start", "<Keyboard>/escape");
+            }
+            else
+            {
+                //player two keyboard is the arrow keys with numpad 4 5 6 for punches and numpad 1 2 3 for kicks
+                Bind(map, "Up", "<Keyboard>/upArrow"); Bind(map, "Down", "<Keyboard>/downArrow"); Bind(map, "Left", "<Keyboard>/leftArrow"); Bind(map, "Right", "<Keyboard>/rightArrow");
+                Bind(map, "LP", "<Keyboard>/numpad4"); Bind(map, "MP", "<Keyboard>/numpad5"); Bind(map, "HP", "<Keyboard>/numpad6");
+                Bind(map, "LK", "<Keyboard>/numpad1"); Bind(map, "MK", "<Keyboard>/numpad2"); Bind(map, "HK", "<Keyboard>/numpad3");
+                Bind(map, "Start", "<Keyboard>/backspace");
+            }
+
+            //this is the gamepad layout and it is kind of like the classic six button street fighter layout
+            //the face buttons are light and medium and the right bumper and trigger are the heavies
+            Bind(map, "Up", "<Gamepad>/dpad/up"); Bind(map, "Down", "<Gamepad>/dpad/down"); Bind(map, "Left", "<Gamepad>/dpad/left"); Bind(map, "Right", "<Gamepad>/dpad/right");
+            Bind(map, "Up", "<Gamepad>/leftStick/up"); Bind(map, "Down", "<Gamepad>/leftStick/down"); Bind(map, "Left", "<Gamepad>/leftStick/left"); Bind(map, "Right", "<Gamepad>/leftStick/right");
+            Bind(map, "LP", "<Gamepad>/buttonWest"); Bind(map, "MP", "<Gamepad>/buttonNorth"); Bind(map, "HP", "<Gamepad>/rightShoulder");
+            Bind(map, "LK", "<Gamepad>/buttonSouth"); Bind(map, "MK", "<Gamepad>/buttonEast"); Bind(map, "HK", "<Gamepad>/rightTrigger");
+            Bind(map, "Start", "<Gamepad>/start");
+        }
+
+        static void Bind(InputActionMap map, string action, string path)
         {
             map.FindAction(action).AddBinding(path);
         }

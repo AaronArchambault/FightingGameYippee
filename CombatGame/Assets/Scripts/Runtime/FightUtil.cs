@@ -21,6 +21,65 @@ namespace FightGame
 
         public static Color WithAlpha(Color c, float a) { c.a = a; return c; }
 
+        //unity 2023 renamed the find functions so this picks the right one
+        public static T FindInScene<T>() where T : Object
+        {
+#if UNITY_2023_1_OR_NEWER
+            return Object.FindFirstObjectByType<T>();
+#else
+            return Object.FindObjectOfType<T>();
+#endif
+        }
+
+        //this turns a move into numpad notation which is how fighting game players write moves
+        public static string Notation(MoveDef m)
+        {
+            string motion = "";
+            switch (m.motion)
+            {
+                case FightCore.Motion.QCF: motion = "236"; break;
+                case FightCore.Motion.QCB: motion = "214"; break;
+                case FightCore.Motion.DP: motion = "623"; break;
+                case FightCore.Motion.RDP: motion = "421"; break;
+                case FightCore.Motion.HCF: motion = "41236"; break;
+                case FightCore.Motion.HCB: motion = "63214"; break;
+                case FightCore.Motion.Super236236: motion = "236236"; break;
+                case FightCore.Motion.Super214214: motion = "214214"; break;
+                case FightCore.Motion.ChargeBackForward: motion = "[4]6"; break;
+                case FightCore.Motion.ChargeDownUp: motion = "[2]8"; break;
+            }
+            if (m.motion == FightCore.Motion.None)
+            {
+                switch (m.dir)
+                {
+                    case DirReq.Forward: motion = "6"; break;
+                    case DirReq.Back: motion = "4"; break;
+                    case DirReq.DownForward: motion = "3"; break;
+                    case DirReq.DownBack: motion = "1"; break;
+                    case DirReq.Crouch: motion = "2"; break;
+                    case DirReq.Air: motion = "j."; break;
+                    case DirReq.AirDown: motion = "j.2"; break;
+                    default: motion = "5"; break;
+                }
+            }
+            string b;
+            if (m.buttons == Btn.Punches) b = "P";
+            else if (m.buttons == Btn.Kicks) b = "K";
+            else
+            {
+                var sb = new System.Text.StringBuilder();
+                if ((m.buttons & Btn.LP) != 0) sb.Append("LP ");
+                if ((m.buttons & Btn.MP) != 0) sb.Append("MP ");
+                if ((m.buttons & Btn.HP) != 0) sb.Append("HP ");
+                if ((m.buttons & Btn.LK) != 0) sb.Append("LK ");
+                if ((m.buttons & Btn.MK) != 0) sb.Append("MK ");
+                if ((m.buttons & Btn.HK) != 0) sb.Append("HK ");
+                b = sb.ToString().Trim();
+            }
+            string prefix = string.IsNullOrEmpty(m.requiresPrev) ? "" : "after " + m.requiresPrev + "  ";
+            return prefix + motion + " " + b;
+        }
+
         //this gets the font that comes with unity so the ui works without importing anything
         static Font font;
         public static Font DefaultFont
@@ -68,15 +127,29 @@ namespace FightGame
     {
         static Sprite square, squareTop, circle, softCircle, ring;
 
+        //if there is a DefaultSprites asset it uses those so anything built in the editor keeps its sprites after you save the scene
+        //sprites made in code only live while the game runs so they would go missing in a saved scene
+        public static DefaultSprites Saved;
+
+        static DefaultSprites Lookup()
+        {
+            if (Saved == null) Saved = Resources.Load<DefaultSprites>(DefaultSprites.ResourcePath);
+            return Saved;
+        }
+
         //this is a white square with the pivot in the middle
-        public static Sprite Square { get { if (square == null) square = MakeSquare(new Vector2(0.5f, 0.5f)); return square; } }
+        public static Sprite Square { get { var d = Lookup(); if (d != null && d.square != null) return d.square; if (square == null) square = MakeSquare(new Vector2(0.5f, 0.5f)); return square; } }
 
         //this is a white square with the pivot at the top so it can swing like an arm or a leg
-        public static Sprite SquareTop { get { if (squareTop == null) squareTop = MakeSquare(new Vector2(0.5f, 1f)); return squareTop; } }
+        public static Sprite SquareTop { get { var d = Lookup(); if (d != null && d.squareTop != null) return d.squareTop; if (squareTop == null) squareTop = MakeSquare(new Vector2(0.5f, 1f)); return squareTop; } }
 
-        public static Sprite Circle { get { if (circle == null) circle = MakeCircle(64, 0f, false); return circle; } }
-        public static Sprite SoftCircle { get { if (softCircle == null) softCircle = MakeCircle(64, 1f, false); return softCircle; } }
-        public static Sprite Ring { get { if (ring == null) ring = MakeCircle(64, 0f, true); return ring; } }
+        public static Sprite Circle { get { var d = Lookup(); if (d != null && d.circle != null) return d.circle; if (circle == null) circle = MakeCircle(64, 0f, false); return circle; } }
+        public static Sprite SoftCircle { get { var d = Lookup(); if (d != null && d.softCircle != null) return d.softCircle; if (softCircle == null) softCircle = MakeCircle(64, 1f, false); return softCircle; } }
+        public static Sprite Ring { get { var d = Lookup(); if (d != null && d.ring != null) return d.ring; if (ring == null) ring = MakeCircle(64, 0f, true); return ring; } }
+
+        //the editor uses these to save the made up shapes as real png files
+        public static Texture2D SquareTexture() { return MakeSquare(new Vector2(0.5f, 0.5f)).texture; }
+        public static Texture2D CircleTexture(float softness, bool ringOnly) { return MakeCircle(64, softness, ringOnly).texture; }
 
         static Sprite MakeSquare(Vector2 pivot)
         {

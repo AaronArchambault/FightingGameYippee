@@ -22,12 +22,10 @@ namespace FightCore
     public class MatchSim
     {
         public const int FPS = 60;
-        public const int StageHalf = 7200;
-        public const int MaxSeparation = 6000;
-        public const int RoundSeconds = 99;
-        public const int IntroFrames = 100;
-        public const int RoundEndFrames = 200;
-        public const int JuggleLimit = 3;
+        //the rules for this match and they never change once the match starts
+        public readonly MatchRules rules;
+        public int StageHalf { get { return rules.stageHalfWidth; } }
+        public bool HasTimer { get { return rules.roundSeconds > 0; } }
         public const int ThrowHoldFrames = 22;
 
         public readonly FighterSim[] fighters = new FighterSim[2];
@@ -40,23 +38,27 @@ namespace FightCore
         public int phaseFrame;
         public int timerFrames;
         public int round = 1;
-        public int roundsToWin = 2;
+        public int roundsToWin { get { return rules.roundsToWin; } }
         public int superFreeze;
         public int superFreezeOwner = -1;
         public int matchWinner = -1;
         public int roundWinner = -1;
 
         public bool training;
-        public bool trainingInfiniteMeter = true;
-        public bool trainingRefillHealth = true;
+        public bool trainingInfiniteMeter { get { return rules.trainingInfiniteMeter; } }
+        public bool trainingRefillHealth { get { return rules.trainingRefillHealth; } }
 
         //this is the damage scaling so combos cannot do crazy amounts of damage
         static readonly int[] Scaling = { 100, 100, 80, 70, 60, 50, 40, 30, 20, 10 };
 
         readonly WorldBox[] hurtA = new WorldBox[6];
 
-        public MatchSim(FighterDef p1, FighterDef p2, bool training)
+        public MatchSim(FighterDef p1, FighterDef p2, bool training) : this(p1, p2, training, null) { }
+
+        public MatchSim(FighterDef p1, FighterDef p2, bool training, MatchRules rules)
         {
+            this.rules = rules != null ? rules.Clone() : new MatchRules();
+            this.rules.Sanitize();
             fighters[0] = new FighterSim(0, p1);
             fighters[1] = new FighterSim(1, p2);
             fighters[0].opp = fighters[1];
@@ -82,7 +84,7 @@ namespace FightCore
             fighters[0].ResetForRound(-1500, 1);
             fighters[1].ResetForRound(1500, -1);
             for (int i = 0; i < projectiles.Length; i++) projectiles[i].active = false;
-            timerFrames = RoundSeconds * FPS;
+            timerFrames = rules.roundSeconds * FPS;
             phase = Phase.Intro;
             phaseFrame = 0;
             superFreeze = 0;
@@ -101,10 +103,10 @@ namespace FightCore
             superFreeze = 0;
         }
 
-        public void Emit(SimEventType t, int player, int x, int y, HitLevel level = HitLevel.Light, int value = 0, int value2 = 0)
+        public void Emit(SimEventType t, int player, int x, int y, HitLevel level = HitLevel.Light, int value = 0, int value2 = 0, int move = -1)
         {
             if (eventCount >= events.Length) return;
-            events[eventCount++] = new SimEvent { type = t, player = player, x = x, y = y, level = level, value = value, value2 = value2 };
+            events[eventCount++] = new SimEvent { type = t, player = player, x = x, y = y, level = level, value = value, value2 = value2, move = move };
         }
 
         //this runs exactly one frame of the fight
@@ -194,9 +196,9 @@ namespace FightCore
 
             //this stops the fighters from getting farther apart than the camera can show
             int sep = Math.Abs(b.x - a.x);
-            if (sep > MaxSeparation)
+            if (sep > rules.maxSeparation)
             {
-                int excess = sep - MaxSeparation;
+                int excess = sep - rules.maxSeparation;
                 bool aAway = (a.x - a.prevX) * (a.x - b.x) > 0;
                 bool bAway = (b.x - b.prevX) * (b.x - a.x) > 0;
                 int sA = a.x < b.x ? 1 : -1;
@@ -263,7 +265,7 @@ namespace FightCore
                 p.cooldown = 0;
                 p.hitstop = 0;
                 p.moveIndex = m.index;
-                Emit(SimEventType.ProjectileSpawn, o.index, p.x, p.y, m.projectile.hit.level, i);
+                Emit(SimEventType.ProjectileSpawn, o.index, p.x, p.y, m.projectile.hit.level, i, 0, m.index);
                 return;
             }
         }
@@ -286,7 +288,7 @@ namespace FightCore
         {
             var p = projectiles[i];
             p.active = false;
-            Emit(SimEventType.ProjectileEnd, p.owner, p.x, p.y + p.def.box.cy, p.def.hit.level, i);
+            Emit(SimEventType.ProjectileEnd, p.owner, p.x, p.y + p.def.box.cy, p.def.hit.level, i, 0, p.moveIndex);
         }
 
         struct StrikeHit
@@ -345,8 +347,8 @@ namespace FightCore
             bool t0 = CheckThrow(f0, f1);
             bool t1 = CheckThrow(f1, f0);
 
-            if (s0.valid) { f0.hitGroupMask |= 1 << s0.group; ApplyHit(f0, f1, m0.HitFor(s0.group), s0.cx, s0.cy, false, m0.isSuper, f0.x); }
-            if (s1.valid) { f1.hitGroupMask |= 1 << s1.group; ApplyHit(f1, f0, m1.HitFor(s1.group), s1.cx, s1.cy, false, m1.isSuper, f1.x); }
+            if (s0.valid) { f0.hitGroupMask |= 1 << s0.group; hitMoveIndex = m0.index; ApplyHit(f0, f1, m0.HitFor(s0.group), s0.cx, s0.cy, false, m0.isSuper, f0.x); }
+            if (s1.valid) { f1.hitGroupMask |= 1 << s1.group; hitMoveIndex = m1.index; ApplyHit(f1, f0, m1.HitFor(s1.group), s1.cx, s1.cy, false, m1.isSuper, f1.x); }
 
             //attacks beat throws so if you got hit this frame your throw does not happen
             if (s1.valid) t0 = false;
@@ -395,6 +397,7 @@ namespace FightCore
                     if (!box.Overlaps(hurtA[h])) continue;
                     var owner = fighters[p.owner];
                     var ownerMove = owner.def.moves[p.moveIndex];
+                    hitMoveIndex = p.moveIndex;
                     ApplyHit(owner, d, p.def.hit, box.CenterX, box.CenterY, true, ownerMove.isSuper, p.x - p.dir * 1000);
                     p.hitsLeft--;
                     p.cooldown = p.def.hitInterval;
@@ -434,6 +437,10 @@ namespace FightCore
             return s;
         }
 
+        //this remembers which move caused the hit so the unity side can play that move's own sound or spark
+        //it is only for visuals and is never part of the fight logic
+        int hitMoveIndex = -1;
+
         void ApplyHit(FighterSim a, FighterSim d, HitData h, int cx, int cy, bool projectile, bool super, int sourceX)
         {
             int awayDir = d.x > sourceX ? 1 : (d.x < sourceX ? -1 : -d.facing);
@@ -460,7 +467,7 @@ namespace FightCore
                 if (!projectile) { a.hitstop = stop; a.moveConnected = true; a.cancelSinceFrame = a.input.NewestFrame; }
                 a.AddMeter(h.meterGain / 2);
                 d.AddMeter(h.meterGain / 3);
-                Emit(SimEventType.Block, a.index, cx, cy, h.level, d.index);
+                Emit(SimEventType.Block, a.index, cx, cy, h.level, d.index, 0, hitMoveIndex);
                 if (d.health <= 0) KO(d);
                 return;
             }
@@ -513,7 +520,7 @@ namespace FightCore
             }
             a.AddMeter(h.meterGain);
             d.AddMeter(h.meterGain / 3);
-            Emit(counter ? SimEventType.CounterHit : SimEventType.Hit, a.index, cx, cy, h.level, d.index, dmg);
+            Emit(counter ? SimEventType.CounterHit : SimEventType.Hit, a.index, cx, cy, h.level, d.index, dmg, hitMoveIndex);
 
             if (d.health <= 0) KO(d);
         }
@@ -606,7 +613,7 @@ namespace FightCore
                 d.vy = m.hit.launchVY > 0 ? m.hit.launchVY : 120;
                 d.vx = away * Math.Max(20, m.hit.launchVX);
                 d.hardKnockdown = true;
-                d.juggle = JuggleLimit;
+                d.juggle = rules.juggleLimit;
                 ClampWall(d, a);
                 a.AddMeter(m.hit.meterGain);
 
@@ -637,7 +644,7 @@ namespace FightCore
             {
                 case Phase.Intro:
                     if (phaseFrame == 1) Emit(SimEventType.RoundAnnounce, -1, 0, 0, HitLevel.Light, round);
-                    if (phaseFrame >= IntroFrames)
+                    if (phaseFrame >= rules.introFrames)
                     {
                         phase = Phase.Fight;
                         phaseFrame = 0;
@@ -648,6 +655,8 @@ namespace FightCore
                     break;
 
                 case Phase.Fight:
+                    //if the timer is turned off the round just goes until someone gets knocked out
+                    if (!HasTimer) break;
                     timerFrames--;
                     if (timerFrames <= 0)
                     {
@@ -666,7 +675,7 @@ namespace FightCore
                         var w = fighters[roundWinner];
                         if (w.IsActionable && w.state != FState.Win) { w.state = FState.Win; w.stateFrame = 0; w.vx = 0; }
                     }
-                    if (phaseFrame >= RoundEndFrames) EndRound();
+                    if (phaseFrame >= rules.roundEndFrames) EndRound();
                     break;
 
                 case Phase.MatchOver:

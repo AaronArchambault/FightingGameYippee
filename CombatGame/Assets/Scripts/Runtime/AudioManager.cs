@@ -23,7 +23,8 @@ namespace FightGame
         [Range(0f, 1f)] public float musicVolume = 0.45f;
         public SoundBank bank;
 
-        const int Voices = 16;
+        [Tooltip("how many sounds can play at once")]
+        [Range(4, 32)] public int voices = 16;
         AudioSource[] sources;
         float[] startTimes;
         int[] priorities;
@@ -44,13 +45,19 @@ namespace FightGame
             return am;
         }
 
-        void Init()
+        bool ready;
+
+        void Awake() { Init(); }
+
+        public void Init()
         {
+            if (ready) return;
+            ready = true;
             Instance = this;
-            sources = new AudioSource[Voices];
-            startTimes = new float[Voices];
-            priorities = new int[Voices];
-            for (int i = 0; i < Voices; i++)
+            sources = new AudioSource[voices];
+            startTimes = new float[voices];
+            priorities = new int[voices];
+            for (int i = 0; i < voices; i++)
             {
                 var child = new GameObject("Voice" + i);
                 child.transform.SetParent(transform, false);
@@ -105,11 +112,17 @@ namespace FightGame
             }
             else clip = fallback[idx];
             if (clip == null) return;
+            PlayClip(clip, vol, pan, PriorityOf(id), pitchVar);
+        }
 
-            int prio = PriorityOf(id);
+        //this plays any clip through the pool like a fighter voice line or a move sound from a FighterAsset
+        public void PlayClip(AudioClip clip, float volume = 1f, float pan = 0f, int prio = 3, float pitchVar = 0.03f)
+        {
+            if (clip == null || sources == null) return;
+            float vol = volume;
             int pick = -1;
             float oldest = float.MaxValue;
-            for (int i = 0; i < Voices; i++)
+            for (int i = 0; i < sources.Length; i++)
             {
                 if (!sources[i].isPlaying) { pick = i; break; }
                 if (priorities[i] <= prio && startTimes[i] < oldest) { oldest = startTimes[i]; pick = i; }
@@ -126,10 +139,11 @@ namespace FightGame
             priorities[pick] = prio;
         }
 
-        public void PlayMusic(bool battle)
+        //the stage can give its own music and that wins over the bank
+        public void PlayMusic(bool battle, AudioClip overrideClip = null)
         {
-            AudioClip clip = null;
-            if (bank != null) clip = battle ? bank.battleMusic : bank.menuMusic;
+            AudioClip clip = overrideClip;
+            if (clip == null && bank != null) clip = battle ? bank.battleMusic : bank.menuMusic;
             if (clip == null && battle)
             {
                 if (fallbackMusic == null) fallbackMusic = ProceduralSfx.BuildMusicLoop();

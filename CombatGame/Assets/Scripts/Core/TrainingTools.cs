@@ -171,6 +171,8 @@ namespace FightCore
         public List<int> p1Inputs = new List<int>();
         public List<int> p2Inputs = new List<int>();
         public uint finalChecksum;
+        //the rules are saved too so the replay plays back the same way
+        public MatchRules rules = new MatchRules();
 
         public void Add(FrameInput a, FrameInput b)
         {
