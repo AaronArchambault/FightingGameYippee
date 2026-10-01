@@ -9,6 +9,28 @@ namespace FightGame
         public static Canvas Canvas(string name, int order)
         {
             var go = new GameObject(name);
+            return MakeCanvas(go, order);
+        }
+
+        //if a ui script is on an object that is not inside a canvas this turns that object into one
+        //so you can put the hud or menus on any empty object and it still shows up
+        public static void EnsureCanvas(GameObject go, int order)
+        {
+            if (go.GetComponentInParent<Canvas>() == null) MakeCanvas(go, order);
+        }
+
+        //this tells unity the scene changed after building something from a right click menu so it gets saved
+        public static void MarkDirty(Component c)
+        {
+#if UNITY_EDITOR
+            if (Application.isPlaying) return;
+            UnityEditor.EditorUtility.SetDirty(c);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(c.gameObject.scene);
+#endif
+        }
+
+        static Canvas MakeCanvas(GameObject go, int order)
+        {
             var c = go.AddComponent<Canvas>();
             c.renderMode = RenderMode.ScreenSpaceOverlay;
             c.sortingOrder = order;

@@ -147,6 +147,21 @@ namespace FightGame
             if ((b & Btn.HK) != 0) sb.Append(" HK");
         }
 
+        public bool IsEmpty
+        {
+            get { return frameDataText == null && inputText == null && dummyText == null && helpText == null; }
+        }
+
+        //right click the component header in the inspector and pick this to build the default panels in your scene
+        [ContextMenu("Build Default Layout")]
+        void BuildDefaultFromMenu()
+        {
+            if (!IsEmpty) { Debug.LogWarning("Fighting Game: this overlay already has pieces hooked up so nothing was built"); return; }
+            UIFactory.EnsureCanvas(gameObject, 11);
+            BuildDefault();
+            UIFactory.MarkDirty(this);
+        }
+
         //this builds the default panels as real objects and fills in the fields
         public void BuildDefault()
         {

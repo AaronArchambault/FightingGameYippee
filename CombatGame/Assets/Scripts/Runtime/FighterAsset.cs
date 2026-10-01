@@ -73,6 +73,31 @@ namespace FightGame
             return fxLookup.TryGetValue(moveId, out fx) ? fx : null;
         }
 
+        //a new fighter made from the create menu has no moves so these fill it with one of the built in fighters
+        //right click the asset header in the inspector to use them then change whatever you want
+        [ContextMenu("Load Built In Fighter/Kaito")] void LoadKaito() { LoadBuiltIn("kaito"); }
+        [ContextMenu("Load Built In Fighter/Brick")] void LoadBrick() { LoadBuiltIn("brick"); }
+        [ContextMenu("Load Built In Fighter/Vex")] void LoadVex() { LoadBuiltIn("vex"); }
+        [ContextMenu("Load Built In Fighter/Lumen")] void LoadLumen() { LoadBuiltIn("lumen"); }
+
+        void LoadBuiltIn(string id)
+        {
+            foreach (var d in RosterFactory.CreateDefaultRoster())
+            {
+                if (d.id != id) continue;
+#if UNITY_EDITOR
+                UnityEditor.Undo.RecordObject(this, "Load Built In Fighter");
+#endif
+                def = d;
+                fxLookup = null;
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(this);
+#endif
+                Debug.Log("Fighting Game: loaded " + d.displayName + " into " + name);
+                return;
+            }
+        }
+
         //it makes a copy for the match so nothing that happens in a fight changes the saved asset
         public FighterDef CreateRuntimeCopy()
         {
@@ -112,7 +137,16 @@ namespace FightGame
             if (roster != null)
             {
                 foreach (var fa in roster.fighters)
-                    if (fa != null && fa.def != null) list.Add(new RosterEntry { asset = fa, source = fa.def });
+                {
+                    if (fa == null || fa.def == null) continue;
+                    //a fighter with no moves would break the match so it gets skipped with a warning
+                    if (fa.def.moves == null || fa.def.moves.Count == 0)
+                    {
+                        Debug.LogWarning("Fighting Game: " + fa.name + " has no moves so it was skipped and you can right click it and pick Load Built In Fighter");
+                        continue;
+                    }
+                    list.Add(new RosterEntry { asset = fa, source = fa.def });
+                }
             }
             if (list.Count == 0)
             {

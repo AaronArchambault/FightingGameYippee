@@ -139,6 +139,19 @@ namespace FightGame
             if (EventSystem.current.currentSelectedGameObject == null) Select();
         }
 
+        //true when there are no menu screens under this object yet
+        public bool IsEmpty { get { return GetComponentsInChildren<MenuPanel>(true).Length == 0; } }
+
+        //right click the component header in the inspector and pick this to build the default menus in your scene
+        [ContextMenu("Build Default Layout")]
+        void BuildDefaultFromMenu()
+        {
+            if (!IsEmpty) { Debug.LogWarning("Fighting Game: there are already menu panels here so nothing was built"); return; }
+            UIFactory.EnsureCanvas(gameObject, 20);
+            BuildDefault();
+            UIFactory.MarkDirty(this);
+        }
+
         //this is the default menu layout built as real objects
         //the editor scene builder calls this so you get menus you can restyle and move around in the scene
         public void BuildDefault()
