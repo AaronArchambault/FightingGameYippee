@@ -1,0 +1,2704 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18b2e1897b7760429135057c8edfb0a, type: 3}
+  m_Name: TestFighter
+  m_EditorClassIdentifier: FightGame.Runtime::FightGame.FighterAsset
+  def:
+    id: kaito
+    displayName: Kaito
+    archetype: 0
+    colorRGB: 15921906
+    accentRGB: 12986408
+    maxHealth: 10000
+    walkForward: 45
+    walkBack: 35
+    dashFrames: 18
+    dashSpeed: 90
+    backdashFrames: 22
+    backdashSpeed: 75
+    prejump: 4
+    jumpVY: 250
+    jumpVX: 55
+    gravity: 14
+    landFrames: 3
+    pushWidth: 520
+    standHurt:
+      cx: 0
+      cy: 900
+      w: 560
+      h: 1800
+    crouchHurt:
+      cx: 0
+      cy: 600
+      w: 640
+      h: 1200
+    airHurt:
+      cx: 0
+      cy: 800
+      w: 560
+      h: 1300
+    moves:
+    - id: st_lp
+      displayName: Standing Jab
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 1
+      buttons: 16
+      priority: 0
+      requiresPrev: 
+      startup: 4
+      active: 2
+      recovery: 7
+      landingRecovery: 0
+      hit:
+        damage: 300
+        chip: 0
+        hitstun: 12
+        blockstun: 10
+        hitstop: 8
+        guard: 0
+        effect: 0
+        level: 0
+        pushbackHit: 420
+        pushbackBlock: 600
+        launchVX: 40
+        launchVY: 170
+        meterGain: 8
+        chipCanKO: 0
+      hitboxes:
+      - start: 4
+        end: 5
+        rect:
+          cx: 550
+          cy: 1350
+          w: 450
+          h: 220
+        hitGroup: 0
+      hurtboxes:
+      - start: 4
+        end: 8
+        rect:
+          cx: 505
+          cy: 1350
+          w: 360
+          h: 220
+        hitGroup: 0
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 1
+      superCancel: 0
+      cancelEnd: 0
+      chains:
+      - st_lp
+      - cr_lp
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 1025
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: st_mp
+      displayName: Standing Strong
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 1
+      buttons: 32
+      priority: 0
+      requiresPrev: 
+      startup: 6
+      active: 3
+      recovery: 12
+      landingRecovery: 0
+      hit:
+        damage: 550
+        chip: 0
+        hitstun: 17
+        blockstun: 13
+        hitstop: 10
+        guard: 0
+        effect: 0
+        level: 1
+        pushbackHit: 550
+        pushbackBlock: 750
+        launchVX: 40
+        launchVY: 170
+        meterGain: 15
+        chipCanKO: 0
+      hitboxes:
+      - start: 6
+        end: 8
+        rect:
+          cx: 650
+          cy: 1250
+          w: 600
+          h: 260
+        hitGroup: 0
+      hurtboxes:
+      - start: 6
+        end: 14
+        rect:
+          cx: 590
+          cy: 1250
+          w: 480
+          h: 260
+        hitGroup: 0
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 1
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 1
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: st_hp
+      displayName: Standing Fierce
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 1
+      buttons: 64
+      priority: 0
+      requiresPrev: 
+      startup: 9
+      active: 4
+      recovery: 19
+      landingRecovery: 0
+      hit:
+        damage: 850
+        chip: 0
+        hitstun: 21
+        blockstun: 16
+        hitstop: 12
+        guard: 0
+        effect: 0
+        level: 2
+        pushbackHit: 700
+        pushbackBlock: 900
+        launchVX: 40
+        launchVY: 170
+        meterGain: 22
+        chipCanKO: 0
+      hitboxes:
+      - start: 9
+        end: 12
+        rect:
+          cx: 720
+          cy: 1300
+          w: 700
+          h: 320
+        hitGroup: 0
+      hurtboxes:
+      - start: 9
+        end: 21
+        rect:
+          cx: 650
+          cy: 1300
+          w: 560
+          h: 320
+        hitGroup: 0
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 1
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 0
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: st_lk
+      displayName: Standing Short
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 1
+      buttons: 128
+      priority: 0
+      requiresPrev: 
+      startup: 5
+      active: 3
+      recovery: 9
+      landingRecovery: 0
+      hit:
+        damage: 300
+        chip: 0
+        hitstun: 13
+        blockstun: 11
+        hitstop: 8
+        guard: 0
+        effect: 0
+        level: 0
+        pushbackHit: 420
+        pushbackBlock: 600
+        launchVX: 40
+        launchVY: 170
+        meterGain: 8
+        chipCanKO: 0
+      hitboxes:
+      - start: 5
+        end: 7
+        rect:
+          cx: 600
+          cy: 650
+          w: 560
+          h: 280
+        hitGroup: 0
+      hurtboxes:
+      - start: 5
+        end: 11
+        rect:
+          cx: 544
+          cy: 650
+          w: 448
+          h: 280
+        hitGroup: 0
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 1024
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: st_mk
+      displayName: Standing Forward
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 1
+      buttons: 256
+      priority: 0
+      requiresPrev: 
+      startup: 7
+      active: 3
+      recovery: 15
+      landingRecovery: 0
+      hit:
+        damage: 550
+        chip: 0
+        hitstun: 17
+        blockstun: 13
+        hitstop: 10
+        guard: 0
+        effect: 0
+        level: 1
+        pushbackHit: 550
+        pushbackBlock: 750
+        launchVX: 40
+        launchVY: 170
+        meterGain: 15
+        chipCanKO: 0
+      hitboxes:
+      - start: 7
+        end: 9
+        rect:
+          cx: 780
+          cy: 900
+          w: 700
+          h: 260
+        hitGroup: 0
+      hurtboxes:
+      - start: 7
+        end: 16
+        rect:
+          cx: 710
+          cy: 900
+          w: 560
+          h: 260
+        hitGroup: 0
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 1
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: st_hk
+      displayName: Standing Roundhouse
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 1
+      buttons: 512
+      priority: 0
+      requiresPrev: 
+      startup: 11
+      active: 4
+      recovery: 20
+      landingRecovery: 0
+      hit:
+        damage: 900
+        chip: 0
+        hitstun: 21
+        blockstun: 15
+        hitstop: 12
+        guard: 0
+        effect: 0
+        level: 2
+        pushbackHit: 700
+        pushbackBlock: 900
+        launchVX: 40
+        launchVY: 170
+        meterGain: 22
+        chipCanKO: 0
+      hitboxes:
+      - start: 11
+        end: 14
+        rect:
+          cx: 820
+          cy: 1450
+          w: 700
+          h: 360
+        hitGroup: 0
+      hurtboxes:
+      - start: 11
+        end: 24
+        rect:
+          cx: 750
+          cy: 1450
+          w: 560
+          h: 360
+        hitGroup: 0
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 0
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: cr_lp
+      displayName: Crouching Jab
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 2
+      buttons: 16
+      priority: 0
+      requiresPrev: 
+      startup: 4
+      active: 2
+      recovery: 7
+      landingRecovery: 0
+      hit:
+        damage: 280
+        chip: 0
+        hitstun: 12
+        blockstun: 10
+        hitstop: 8
+        guard: 0
+        effect: 0
+        level: 0
+        pushbackHit: 420
+        pushbackBlock: 600
+        launchVX: 40
+        launchVY: 170
+        meterGain: 8
+        chipCanKO: 0
+      hitboxes:
+      - start: 4
+        end: 5
+        rect:
+          cx: 560
+          cy: 800
+          w: 450
+          h: 220
+        hitGroup: 0
+      hurtboxes:
+      - start: 4
+        end: 8
+        rect:
+          cx: 515
+          cy: 800
+          w: 360
+          h: 220
+        hitGroup: 0
+      crouching: 1
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 1
+      superCancel: 0
+      cancelEnd: 0
+      chains:
+      - cr_lp
+      - st_lp
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 1024
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: cr_mp
+      displayName: Crouching Strong
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 2
+      buttons: 32
+      priority: 0
+      requiresPrev: 
+      startup: 6
+      active: 3
+      recovery: 12
+      landingRecovery: 0
+      hit:
+        damage: 520
+        chip: 0
+        hitstun: 17
+        blockstun: 13
+        hitstop: 10
+        guard: 0
+        effect: 0
+        level: 1
+        pushbackHit: 550
+        pushbackBlock: 750
+        launchVX: 40
+        launchVY: 170
+        meterGain: 15
+        chipCanKO: 0
+      hitboxes:
+      - start: 6
+        end: 8
+        rect:
+          cx: 600
+          cy: 900
+          w: 560
+          h: 260
+        hitGroup: 0
+      hurtboxes:
+      - start: 6
+        end: 14
+        rect:
+          cx: 544
+          cy: 900
+          w: 448
+          h: 260
+        hitGroup: 0
+      crouching: 1
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 1
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 0
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: cr_hp
+      displayName: Crouching Fierce
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 2
+      buttons: 64
+      priority: 0
+      requiresPrev: 
+      startup: 7
+      active: 4
+      recovery: 20
+      landingRecovery: 0
+      hit:
+        damage: 850
+        chip: 0
+        hitstun: 20
+        blockstun: 14
+        hitstop: 12
+        guard: 0
+        effect: 0
+        level: 2
+        pushbackHit: 700
+        pushbackBlock: 900
+        launchVX: 40
+        launchVY: 170
+        meterGain: 22
+        chipCanKO: 0
+      hitboxes:
+      - start: 7
+        end: 10
+        rect:
+          cx: 420
+          cy: 1650
+          w: 480
+          h: 900
+        hitGroup: 0
+      hurtboxes:
+      - start: 7
+        end: 20
+        rect:
+          cx: 372
+          cy: 1650
+          w: 384
+          h: 900
+        hitGroup: 0
+      crouching: 1
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 1
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 2
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: cr_lk
+      displayName: Crouching Short
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 2
+      buttons: 128
+      priority: 0
+      requiresPrev: 
+      startup: 5
+      active: 2
+      recovery: 9
+      landingRecovery: 0
+      hit:
+        damage: 250
+        chip: 0
+        hitstun: 12
+        blockstun: 10
+        hitstop: 8
+        guard: 2
+        effect: 0
+        level: 0
+        pushbackHit: 420
+        pushbackBlock: 600
+        launchVX: 40
+        launchVY: 170
+        meterGain: 8
+        chipCanKO: 0
+      hitboxes:
+      - start: 5
+        end: 6
+        rect:
+          cx: 620
+          cy: 200
+          w: 560
+          h: 240
+        hitGroup: 0
+      hurtboxes:
+      - start: 5
+        end: 10
+        rect:
+          cx: 564
+          cy: 200
+          w: 448
+          h: 240
+        hitGroup: 0
+      crouching: 1
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains:
+      - cr_lp
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 1056
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: cr_mk
+      displayName: Crouching Forward
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 2
+      buttons: 256
+      priority: 0
+      requiresPrev: 
+      startup: 7
+      active: 3
+      recovery: 14
+      landingRecovery: 0
+      hit:
+        damage: 500
+        chip: 0
+        hitstun: 16
+        blockstun: 13
+        hitstop: 10
+        guard: 2
+        effect: 0
+        level: 1
+        pushbackHit: 550
+        pushbackBlock: 750
+        launchVX: 40
+        launchVY: 170
+        meterGain: 15
+        chipCanKO: 0
+      hitboxes:
+      - start: 7
+        end: 9
+        rect:
+          cx: 820
+          cy: 220
+          w: 760
+          h: 260
+        hitGroup: 0
+      hurtboxes:
+      - start: 7
+        end: 16
+        rect:
+          cx: 744
+          cy: 220
+          w: 608
+          h: 260
+        hitGroup: 0
+      crouching: 1
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 1
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 33
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: cr_hk
+      displayName: Sweep
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 2
+      buttons: 512
+      priority: 0
+      requiresPrev: 
+      startup: 9
+      active: 3
+      recovery: 24
+      landingRecovery: 0
+      hit:
+        damage: 900
+        chip: 0
+        hitstun: 20
+        blockstun: 14
+        hitstop: 12
+        guard: 2
+        effect: 2
+        level: 2
+        pushbackHit: 700
+        pushbackBlock: 900
+        launchVX: 40
+        launchVY: 60
+        meterGain: 22
+        chipCanKO: 0
+      hitboxes:
+      - start: 9
+        end: 11
+        rect:
+          cx: 880
+          cy: 200
+          w: 820
+          h: 260
+        hitGroup: 0
+      hurtboxes:
+      - start: 9
+        end: 23
+        rect:
+          cx: 798
+          cy: 200
+          w: 656
+          h: 260
+        hitGroup: 0
+      crouching: 1
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 32
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: j_lp
+      displayName: Jumping Jab
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 7
+      buttons: 16
+      priority: 0
+      requiresPrev: 
+      startup: 4
+      active: 8
+      recovery: 3
+      landingRecovery: 0
+      hit:
+        damage: 300
+        chip: 0
+        hitstun: 14
+        blockstun: 12
+        hitstop: 8
+        guard: 1
+        effect: 0
+        level: 0
+        pushbackHit: 420
+        pushbackBlock: 600
+        launchVX: 40
+        launchVY: 170
+        meterGain: 8
+        chipCanKO: 0
+      hitboxes:
+      - start: 4
+        end: 11
+        rect:
+          cx: 450
+          cy: 700
+          w: 450
+          h: 300
+        hitGroup: 0
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 1
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 3072
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: j_mp
+      displayName: Jumping Strong
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 7
+      buttons: 32
+      priority: 0
+      requiresPrev: 
+      startup: 5
+      active: 6
+      recovery: 4
+      landingRecovery: 0
+      hit:
+        damage: 550
+        chip: 0
+        hitstun: 17
+        blockstun: 14
+        hitstop: 10
+        guard: 1
+        effect: 0
+        level: 1
+        pushbackHit: 550
+        pushbackBlock: 750
+        launchVX: 40
+        launchVY: 170
+        meterGain: 15
+        chipCanKO: 0
+      hitboxes:
+      - start: 5
+        end: 10
+        rect:
+          cx: 550
+          cy: 650
+          w: 500
+          h: 300
+        hitGroup: 0
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 1
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 2048
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: j_hp
+      displayName: Jumping Fierce
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 7
+      buttons: 64
+      priority: 0
+      requiresPrev: 
+      startup: 7
+      active: 5
+      recovery: 5
+      landingRecovery: 0
+      hit:
+        damage: 800
+        chip: 0
+        hitstun: 20
+        blockstun: 16
+        hitstop: 12
+        guard: 1
+        effect: 0
+        level: 2
+        pushbackHit: 700
+        pushbackBlock: 900
+        launchVX: 40
+        launchVY: 170
+        meterGain: 22
+        chipCanKO: 0
+      hitboxes:
+      - start: 7
+        end: 11
+        rect:
+          cx: 600
+          cy: 500
+          w: 550
+          h: 450
+        hitGroup: 0
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 1
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 2048
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: j_lk
+      displayName: Jumping Short
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 7
+      buttons: 128
+      priority: 0
+      requiresPrev: 
+      startup: 4
+      active: 8
+      recovery: 3
+      landingRecovery: 0
+      hit:
+        damage: 300
+        chip: 0
+        hitstun: 14
+        blockstun: 12
+        hitstop: 8
+        guard: 1
+        effect: 0
+        level: 0
+        pushbackHit: 420
+        pushbackBlock: 600
+        launchVX: 40
+        launchVY: 170
+        meterGain: 8
+        chipCanKO: 0
+      hitboxes:
+      - start: 4
+        end: 11
+        rect:
+          cx: 450
+          cy: 300
+          w: 500
+          h: 300
+        hitGroup: 0
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 1
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 3072
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: j_mk
+      displayName: Jumping Forward
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 7
+      buttons: 256
+      priority: 0
+      requiresPrev: 
+      startup: 5
+      active: 7
+      recovery: 4
+      landingRecovery: 0
+      hit:
+        damage: 550
+        chip: 0
+        hitstun: 17
+        blockstun: 14
+        hitstop: 10
+        guard: 1
+        effect: 0
+        level: 1
+        pushbackHit: 550
+        pushbackBlock: 750
+        launchVX: 40
+        launchVY: 170
+        meterGain: 15
+        chipCanKO: 0
+      hitboxes:
+      - start: 5
+        end: 11
+        rect:
+          cx: 550
+          cy: 350
+          w: 600
+          h: 350
+        hitGroup: 0
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 1
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 2048
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: j_hk
+      displayName: Jumping Roundhouse
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 7
+      buttons: 512
+      priority: 0
+      requiresPrev: 
+      startup: 7
+      active: 6
+      recovery: 5
+      landingRecovery: 0
+      hit:
+        damage: 850
+        chip: 0
+        hitstun: 20
+        blockstun: 16
+        hitstop: 12
+        guard: 1
+        effect: 0
+        level: 2
+        pushbackHit: 700
+        pushbackBlock: 900
+        launchVX: 40
+        launchVY: 170
+        meterGain: 22
+        chipCanKO: 0
+      hitboxes:
+      - start: 7
+        end: 12
+        rect:
+          cx: 600
+          cy: 250
+          w: 650
+          h: 400
+        hitGroup: 0
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 1
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 2048
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: throw_f
+      displayName: Throw
+      kind: 2
+      isSuper: 0
+      motion: 0
+      dir: 0
+      buttons: 144
+      priority: 0
+      requiresPrev: 
+      startup: 5
+      active: 3
+      recovery: 23
+      landingRecovery: 0
+      hit:
+        damage: 1200
+        chip: 0
+        hitstun: 0
+        blockstun: 0
+        hitstop: 12
+        guard: 3
+        effect: 0
+        level: 2
+        pushbackHit: 700
+        pushbackBlock: 900
+        launchVX: 60
+        launchVY: 140
+        meterGain: 20
+        chipCanKO: 0
+      hitboxes: []
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 850
+      throwSwapSides: 0
+      aiTags: 64
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: throw_b
+      displayName: Back Throw
+      kind: 2
+      isSuper: 0
+      motion: 0
+      dir: 4
+      buttons: 144
+      priority: 1
+      requiresPrev: 
+      startup: 5
+      active: 3
+      recovery: 23
+      landingRecovery: 0
+      hit:
+        damage: 1200
+        chip: 0
+        hitstun: 0
+        blockstun: 0
+        hitstop: 12
+        guard: 3
+        effect: 0
+        level: 2
+        pushbackHit: 700
+        pushbackBlock: 900
+        launchVX: 60
+        launchVY: 140
+        meterGain: 20
+        chipCanKO: 0
+      hitboxes: []
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 850
+      throwSwapSides: 1
+      aiTags: 0
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: oh_mp
+      displayName: Axe Chop
+      kind: 0
+      isSuper: 0
+      motion: 0
+      dir: 3
+      buttons: 32
+      priority: 0
+      requiresPrev: 
+      startup: 18
+      active: 2
+      recovery: 14
+      landingRecovery: 0
+      hit:
+        damage: 500
+        chip: 0
+        hitstun: 16
+        blockstun: 12
+        hitstop: 10
+        guard: 1
+        effect: 0
+        level: 1
+        pushbackHit: 550
+        pushbackBlock: 750
+        launchVX: 40
+        launchVY: 170
+        meterGain: 15
+        chipCanKO: 0
+      hitboxes:
+      - start: 18
+        end: 19
+        rect:
+          cx: 600
+          cy: 1100
+          w: 550
+          h: 800
+        hitGroup: 0
+      hurtboxes:
+      - start: 18
+        end: 26
+        rect:
+          cx: 545
+          cy: 1100
+          w: 440
+          h: 800
+        hitGroup: 0
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 16
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: fb_l
+      displayName: Hadoken L
+      kind: 1
+      isSuper: 0
+      motion: 1
+      dir: 0
+      buttons: 16
+      priority: 0
+      requiresPrev: 
+      startup: 12
+      active: 1
+      recovery: 32
+      landingRecovery: 0
+      hit:
+        damage: 600
+        chip: 120
+        hitstun: 18
+        blockstun: 16
+        hitstop: 8
+        guard: 0
+        effect: 0
+        level: 3
+        pushbackHit: 650
+        pushbackBlock: 900
+        launchVX: 40
+        launchVY: 170
+        meterGain: 20
+        chipCanKO: 0
+      hitboxes: []
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 1
+      projectileFrame: 12
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 55
+        lifetime: 160
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 600
+          chip: 120
+          hitstun: 18
+          blockstun: 16
+          hitstop: 8
+          guard: 0
+          effect: 0
+          level: 3
+          pushbackHit: 650
+          pushbackBlock: 900
+          launchVX: 40
+          launchVY: 170
+          meterGain: 20
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 8
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: fb_m
+      displayName: Hadoken M
+      kind: 1
+      isSuper: 0
+      motion: 1
+      dir: 0
+      buttons: 32
+      priority: 0
+      requiresPrev: 
+      startup: 12
+      active: 1
+      recovery: 32
+      landingRecovery: 0
+      hit:
+        damage: 600
+        chip: 120
+        hitstun: 18
+        blockstun: 16
+        hitstop: 8
+        guard: 0
+        effect: 0
+        level: 3
+        pushbackHit: 650
+        pushbackBlock: 900
+        launchVX: 40
+        launchVY: 170
+        meterGain: 20
+        chipCanKO: 0
+      hitboxes: []
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 1
+      projectileFrame: 12
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 75
+        lifetime: 160
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 600
+          chip: 120
+          hitstun: 18
+          blockstun: 16
+          hitstop: 8
+          guard: 0
+          effect: 0
+          level: 3
+          pushbackHit: 650
+          pushbackBlock: 900
+          launchVX: 40
+          launchVY: 170
+          meterGain: 20
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 8
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: fb_h
+      displayName: Hadoken H
+      kind: 1
+      isSuper: 0
+      motion: 1
+      dir: 0
+      buttons: 64
+      priority: 0
+      requiresPrev: 
+      startup: 12
+      active: 1
+      recovery: 32
+      landingRecovery: 0
+      hit:
+        damage: 600
+        chip: 120
+        hitstun: 18
+        blockstun: 16
+        hitstop: 8
+        guard: 0
+        effect: 0
+        level: 3
+        pushbackHit: 650
+        pushbackBlock: 900
+        launchVX: 40
+        launchVY: 170
+        meterGain: 20
+        chipCanKO: 0
+      hitboxes: []
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity: []
+      gravity: 0
+      spawnsProjectile: 1
+      projectileFrame: 12
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 100
+        lifetime: 160
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 600
+          chip: 120
+          hitstun: 18
+          blockstun: 16
+          hitstop: 8
+          guard: 0
+          effect: 0
+          level: 3
+          pushbackHit: 650
+          pushbackBlock: 900
+          launchVX: 40
+          launchVY: 170
+          meterGain: 20
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 8
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: dp_l
+      displayName: Shoryu L
+      kind: 1
+      isSuper: 0
+      motion: 3
+      dir: 0
+      buttons: 16
+      priority: 0
+      requiresPrev: 
+      startup: 3
+      active: 9
+      recovery: 16
+      landingRecovery: 12
+      hit:
+        damage: 1000
+        chip: 0
+        hitstun: 0
+        blockstun: 20
+        hitstop: 13
+        guard: 0
+        effect: 1
+        level: 3
+        pushbackHit: 650
+        pushbackBlock: 850
+        launchVX: 30
+        launchVY: 210
+        meterGain: 25
+        chipCanKO: 0
+      hitboxes:
+      - start: 3
+        end: 11
+        rect:
+          cx: 350
+          cy: 1300
+          w: 520
+          h: 1000
+        hitGroup: 0
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 1
+      invulnEnd: 6
+      throwInvuln: 1
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity:
+      - frame: 3
+        vx: 25
+        vy: 190
+        airborne: 1
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 6
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: dp_h
+      displayName: Shoryu H
+      kind: 1
+      isSuper: 0
+      motion: 3
+      dir: 0
+      buttons: 96
+      priority: 0
+      requiresPrev: 
+      startup: 3
+      active: 9
+      recovery: 16
+      landingRecovery: 18
+      hit:
+        damage: 1400
+        chip: 0
+        hitstun: 0
+        blockstun: 20
+        hitstop: 13
+        guard: 0
+        effect: 1
+        level: 3
+        pushbackHit: 650
+        pushbackBlock: 850
+        launchVX: 30
+        launchVY: 210
+        meterGain: 25
+        chipCanKO: 0
+      hitboxes:
+      - start: 3
+        end: 11
+        rect:
+          cx: 350
+          cy: 1300
+          w: 520
+          h: 1000
+        hitGroup: 0
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 1
+      invulnEnd: 8
+      throwInvuln: 1
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity:
+      - frame: 3
+        vx: 35
+        vy: 240
+        airborne: 1
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 6
+      finisherGroup: -1
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: tatsu
+      displayName: Tatsu
+      kind: 1
+      isSuper: 0
+      motion: 2
+      dir: 0
+      buttons: 896
+      priority: 0
+      requiresPrev: 
+      startup: 7
+      active: 18
+      recovery: 14
+      landingRecovery: 8
+      hit:
+        damage: 350
+        chip: 0
+        hitstun: 18
+        blockstun: 12
+        hitstop: 11
+        guard: 0
+        effect: 0
+        level: 3
+        pushbackHit: 650
+        pushbackBlock: 850
+        launchVX: 40
+        launchVY: 170
+        meterGain: 25
+        chipCanKO: 0
+      hitboxes:
+      - start: 7
+        end: 10
+        rect:
+          cx: 350
+          cy: 1100
+          w: 900
+          h: 400
+        hitGroup: 0
+      - start: 13
+        end: 16
+        rect:
+          cx: 350
+          cy: 1100
+          w: 900
+          h: 400
+        hitGroup: 1
+      - start: 19
+        end: 24
+        rect:
+          cx: 350
+          cy: 1100
+          w: 900
+          h: 400
+        hitGroup: 2
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 0
+      invulnEnd: 0
+      throwInvuln: 0
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 0
+      meterOnUse: 0
+      superFreeze: 0
+      velocity:
+      - frame: 5
+        vx: 70
+        vy: 40
+        airborne: 1
+      gravity: 3
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 512
+      finisherGroup: 2
+      finisherEffect: 1
+      finisherLaunchVY: 220
+    - id: super
+      displayName: Shinku Rush
+      kind: 1
+      isSuper: 1
+      motion: 7
+      dir: 0
+      buttons: 112
+      priority: 0
+      requiresPrev: 
+      startup: 5
+      active: 30
+      recovery: 30
+      landingRecovery: 0
+      hit:
+        damage: 520
+        chip: 150
+        hitstun: 30
+        blockstun: 12
+        hitstop: 7
+        guard: 0
+        effect: 0
+        level: 4
+        pushbackHit: 150
+        pushbackBlock: 300
+        launchVX: 40
+        launchVY: 170
+        meterGain: 0
+        chipCanKO: 1
+      hitboxes:
+      - start: 5
+        end: 7
+        rect:
+          cx: 600
+          cy: 1100
+          w: 750
+          h: 1000
+        hitGroup: 0
+      - start: 11
+        end: 13
+        rect:
+          cx: 600
+          cy: 1100
+          w: 750
+          h: 1000
+        hitGroup: 1
+      - start: 17
+        end: 19
+        rect:
+          cx: 600
+          cy: 1100
+          w: 750
+          h: 1000
+        hitGroup: 2
+      - start: 23
+        end: 25
+        rect:
+          cx: 600
+          cy: 1100
+          w: 750
+          h: 1000
+        hitGroup: 3
+      - start: 29
+        end: 31
+        rect:
+          cx: 600
+          cy: 1100
+          w: 750
+          h: 1000
+        hitGroup: 4
+      hurtboxes: []
+      crouching: 0
+      useAirHurtbox: 0
+      invulnStart: 1
+      invulnEnd: 14
+      throwInvuln: 1
+      specialCancel: 0
+      superCancel: 0
+      cancelEnd: 0
+      chains: []
+      meterCost: 200
+      meterOnUse: 0
+      superFreeze: 40
+      velocity:
+      - frame: 1
+        vx: 110
+        vy: 0
+        airborne: 0
+      - frame: 33
+        vx: 0
+        vy: 0
+        airborne: 0
+      gravity: 0
+      spawnsProjectile: 0
+      projectileFrame: 0
+      projectile:
+        spawnX: 700
+        spawnY: 0
+        speed: 80
+        lifetime: 120
+        box:
+          cx: 0
+          cy: 1150
+          w: 500
+          h: 400
+        hit:
+          damage: 500
+          chip: 0
+          hitstun: 15
+          blockstun: 12
+          hitstop: 9
+          guard: 0
+          effect: 0
+          level: 1
+          pushbackHit: 500
+          pushbackBlock: 700
+          launchVX: 40
+          launchVY: 170
+          meterGain: 10
+          chipCanKO: 0
+        durability: 1
+        hitInterval: 4
+        visualSize: 1
+      throwRange: 0
+      throwSwapSides: 0
+      aiTags: 260
+      finisherGroup: 4
+      finisherEffect: 2
+      finisherLaunchVY: 220
+    combos:
+    - name: low into fireball
+      steps:
+      - cr_mk
+      - fb_h
+      meterNeeded: 0
+    - name: jabs into fireball
+      steps:
+      - cr_lp
+      - cr_lp
+      - fb_l
+      meterNeeded: 0
+    - name: strong into dp
+      steps:
+      - st_mp
+      - dp_h
+      meterNeeded: 0
+    - name: fierce into tatsu
+      steps:
+      - st_hp
+      - tatsu
+      meterNeeded: 0
+    - name: fierce into dp
+      steps:
+      - st_hp
+      - dp_h
+      meterNeeded: 0
+    - name: low into super
+      steps:
+      - cr_mk
+      - super
+      meterNeeded: 200
+    - name: fierce into super
+      steps:
+      - st_hp
+      - super
+      meterNeeded: 200
+    - name: jump in
+      steps:
+      - j_hk
+      - st_hp
+      - dp_h
+      meterNeeded: 0
+  animations: {fileID: 11400000, guid: 2badd2c8ba50277438d34f61e208d4d0, type: 2}
+  viewPrefab: {fileID: 5463251760815507088, guid: 33c1b914221482d428d69a515c97637f, type: 3}
+  portrait: {fileID: 21300000, guid: 95afbf0e525581e4cb4488fe2533523b, type: 3}
+  voice:
+    attackShouts: []
+    shoutChance: 0.35
+    hurt: []
+    ko: {fileID: 0}
+    win: {fileID: 0}
+    superCall: {fileID: 0}
+  moveFx: []
